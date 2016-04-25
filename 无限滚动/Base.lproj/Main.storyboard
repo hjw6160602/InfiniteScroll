@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ve3-Qx-3Sh">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="无限滚动" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W35-RZ-4A0">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="317"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="317" id="HvO-th-1GJ"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="Dzh-lU-K5D"/>
+                                </connections>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="W35-RZ-4A0" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="9gU-sO-Iox"/>
+                            <constraint firstAttribute="trailing" secondItem="W35-RZ-4A0" secondAttribute="trailing" id="CQR-1s-8I1"/>
+                            <constraint firstItem="W35-RZ-4A0" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="aVM-Un-0da"/>
+                        </constraints>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="scrollView" destination="W35-RZ-4A0" id="5H8-Wc-fcO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="8.5" y="392.5"/>
+        </scene>
+        <!--Collection View Controller-->
+        <scene sceneID="MZ5-pF-dT0">
+            <objects>
+                <viewController id="ve3-Qx-3Sh" customClass="CollectionViewController" customModule="无限滚动" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="p3d-mf-cDx"/>
+                        <viewControllerLayoutGuide type="bottom" id="3sg-R9-9ea"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="iSD-gz-LLA">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ap1-Og-dJ7">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="317"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="317" id="bnP-iW-34S"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Wcf-vT-h9D">
+                                    <size key="itemSize" width="375" height="317"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="HkW-BK-i3t" customClass="AdvertisingCell" customModule="无限滚动" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="317"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="317"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ap1-Og-dJ7" firstAttribute="leading" secondItem="iSD-gz-LLA" secondAttribute="leading" id="938-KH-Ft3"/>
+                            <constraint firstAttribute="trailing" secondItem="ap1-Og-dJ7" secondAttribute="trailing" id="Dns-r4-1Zn"/>
+                            <constraint firstItem="ap1-Og-dJ7" firstAttribute="top" secondItem="iSD-gz-LLA" secondAttribute="top" id="lKt-73-9RJ"/>
+                        </constraints>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="collectionView" destination="ap1-Og-dJ7" id="nr9-Ex-etw"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uTl-AS-d7I" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="702.5" y="228.5"/>
+        </scene>
+    </scenes>
+</document>
