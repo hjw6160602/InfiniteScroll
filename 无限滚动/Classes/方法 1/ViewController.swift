@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
 
     let pageControl = UIPageControl()
+    let imgHeight:CGFloat = SCREEN_WIDTH / aspectRatio
     
     override func viewDidLoad() {
         super.viewDidLoad()

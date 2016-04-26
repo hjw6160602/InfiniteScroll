@@ -8,7 +8,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="无限滚动" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewController" id="BYZ-38-t0r" customClass="ViewController" customModule="无限滚动" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -47,22 +47,22 @@
         <!--Collection View Controller-->
         <scene sceneID="MZ5-pF-dT0">
             <objects>
-                <viewController id="ve3-Qx-3Sh" customClass="CollectionViewController" customModule="无限滚动" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CollectionViewController" id="ve3-Qx-3Sh" customClass="CollectionViewController" customModule="无限滚动" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="p3d-mf-cDx"/>
                         <viewControllerLayoutGuide type="bottom" id="3sg-R9-9ea"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="iSD-gz-LLA">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ap1-Og-dJ7">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="317"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="271"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="317" id="bnP-iW-34S"/>
+                                    <constraint firstAttribute="height" constant="271" id="bnP-iW-34S"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Wcf-vT-h9D">
-                                    <size key="itemSize" width="375" height="317"/>
+                                    <size key="itemSize" width="320" height="271"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -81,8 +81,8 @@
                             <constraint firstItem="ap1-Og-dJ7" firstAttribute="top" secondItem="iSD-gz-LLA" secondAttribute="top" id="lKt-73-9RJ"/>
                         </constraints>
                     </view>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="collectionHeight" destination="bnP-iW-34S" id="4EU-s7-Tvd"/>
                         <outlet property="collectionView" destination="ap1-Og-dJ7" id="nr9-Ex-etw"/>
                     </connections>
                 </viewController>

@@ -51,4 +51,4 @@ let MAIN_BUNDLE   = NSBundle.mainBundle()
 
 // MARK: - 项目相关 图片总数
 let ImgCount = 5
-let imgHeight:CGFloat = 317
+let aspectRatio:CGFloat = 1.183
