@@ -8,24 +8,38 @@
 
 import UIKit
 
+
+
 class CollectionViewController: UIViewController {
+    
     let MaxSections = 100
+    var currentPage = 1
+    var isInteraction = false
+    let pageControl = UIPageControl()
     
     @IBOutlet weak var collectionView: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        initControls()
+    }
+    
+    private func initControls(){
         // 注册cell
         collectionView.registerNib(UINib(nibName: "AdvertisingCell", bundle: nil), forCellWithReuseIdentifier:"AdvertisingCell")
         
-//        collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: 0, inSection: MaxSections/2), atScrollPosition: UICollectionViewScrollPosition.Left, animated: true)
+        collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: 0, inSection: MaxSections/2), atScrollPosition: UICollectionViewScrollPosition.Left, animated: true)
+        
+        pageControl.numberOfPages = ImgCount
+        pageControl.centerX = view.centerX
+        pageControl.y = imgHeight - 20
+        view.addSubview(pageControl)
     }
     
     //MARK: - 懒加载
     private lazy var imgArr:[UIImage] = {
         var imgArray = [UIImage]()
-        for index in 0..<5 {
+        for index in 0..<ImgCount {
             let imgName = "page\(index)"
             imgArray.append(UIImage(named:imgName)!)
         }
@@ -33,6 +47,7 @@ class CollectionViewController: UIViewController {
     }()
 }
 
+//MARK: - <UICollectionViewDataSource>
 extension CollectionViewController: UICollectionViewDataSource{
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return MaxSections
@@ -48,3 +63,36 @@ extension CollectionViewController: UICollectionViewDataSource{
         return cell;
     }
 }
+
+//MARK: - <UIScrollViewDelegate>
+extension CollectionViewController: UIScrollViewDelegate{
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        isInteraction = true
+    }
+    
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        isInteraction = false
+    }
+    
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        var page = Int(scrollView.contentOffset.x / SCREEN_WIDTH) - (5 * MaxSections/2)
+
+        if page < 0{
+            page = page % ImgCount
+            if page != 0 {
+                page += ImgCount
+            }
+        }
+        else{
+            page = page % ImgCount
+        }
+        currentPage = page
+        print("currentPage :\(currentPage)")
+
+        pageControl.currentPage = currentPage
+    }
+    
+    
+    
+}
+

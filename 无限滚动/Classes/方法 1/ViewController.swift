@@ -11,9 +11,7 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var scrollView: UIScrollView!
-    
-    let SCREEN_WIDTH  = UIScreen.mainScreen().bounds.width
-    let imgHeight:CGFloat = 317
+
     let pageControl = UIPageControl()
     
     override func viewDidLoad() {
@@ -50,7 +48,7 @@ class ViewController: UIViewController {
         firstImgView.frame = CGRectMake(imgViewX, 0, SCREEN_WIDTH, imgHeight)
         scrollView.addSubview(firstImgView)
         
-        pageControl.numberOfPages = 5
+        pageControl.numberOfPages = ImgCount
         pageControl.centerX = view.centerX
         pageControl.y = imgHeight
         view.addSubview(pageControl)
@@ -59,7 +57,7 @@ class ViewController: UIViewController {
     //MARK: - 懒加载
     private lazy var imgArr:[UIImageView] = {
         var imgArray = [UIImageView]()
-        for index in 0..<5 {
+        for index in 0..<ImgCount {
             let imgName = "page\(index)"
             let img = UIImage(named:imgName)
             let imgView = UIImageView(image: img)
@@ -93,7 +91,7 @@ extension ViewController: UIScrollViewDelegate{
         
         // 如果当前页是第0页就是第5页
         if currentPage == 0 {
-            currentPage = 5
+            currentPage = ImgCount
         }// 如果是第最后一页就是第一页
         
         if currentPage == imgArr.count + 1 {
