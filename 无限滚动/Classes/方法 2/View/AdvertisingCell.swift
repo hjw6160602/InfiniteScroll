@@ -10,13 +10,10 @@ import UIKit
 
 class AdvertisingCell: UICollectionViewCell {
     
-    var cellHeight:CGFloat?
-    
     @IBOutlet weak var imgView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.cellHeight = SCREEN_WIDTH / aspectRatio
 //        print(self.height)
     }
 

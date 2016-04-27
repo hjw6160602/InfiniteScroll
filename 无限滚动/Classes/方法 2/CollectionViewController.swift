@@ -21,16 +21,25 @@ class CollectionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        initStatusBar()
         initControls()
+    }
+    
+    /** 初始化 statusBar */
+    private func initStatusBar(){
+        let statusBarCover = UIView(frame: CGRect(x:0, y:0, width:SCREEN_WIDTH, height:20))
+        statusBarCover.backgroundColor = UIColor.blackColor()
+        view.addSubview(statusBarCover)
     }
     
     private func initControls(){
         collectionHeight.constant = SCREEN_WIDTH / aspectRatio
+        
         //1. 注册cell
         collectionView.registerNib(UINib(nibName: "AdvertisingCell", bundle: nil), forCellWithReuseIdentifier:"AdvertisingCell")
         
         collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: 0, inSection: MaxSections/2), atScrollPosition: UICollectionViewScrollPosition.Left, animated: true)
-        
+
         //2. 设置pageControl
         pageControl.numberOfPages = ImgCount
         pageControl.centerX = view.centerX
@@ -42,16 +51,14 @@ class CollectionViewController: UIViewController {
     }
     
     private func addTimer(){
-//        timer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: "nextPage", userInfo: nil, repeats: true)
-//        // 主线程在处理其他时间的时候也处理自动滚动
-//        NSRunLoop.mainRunLoop() .addTimer(timer, forMode: NSRunLoopCommonModes)
+        timer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: "nextPage", userInfo: nil, repeats: true)
+        // 主线程在处理其他时间的时候也处理自动滚动
+        NSRunLoop.mainRunLoop() .addTimer(timer, forMode: NSRunLoopCommonModes)
     }
     
     private func removeTimer(){
         self.timer.invalidate()
     }
-    
-    
     
     func nextPage(){
         //只要定时器一开始，进入当前方法，就拿到当前滚动所在的indexPath,然后偷偷将item滚动到最中间的组
@@ -62,12 +69,12 @@ class CollectionViewController: UIViewController {
         print(Offset.x)
         
         currentPage = (currentPage+1) % ImgCount
-        pageControl.currentPage = currentPage
         
         collectionView.setContentOffset(Offset, animated: true)
     }
     
     private func resetScrollIndexPath(){
+        // 下面这个方法取出在屏幕上可见的collectionView的可见items数组
         let currentIndexPath = collectionView.indexPathsForVisibleItems().last!
         if currentIndexPath.row != currentPage{
             print("日了狗！")
@@ -101,10 +108,20 @@ extension CollectionViewController: UICollectionViewDataSource{
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("AdvertisingCell", forIndexPath: indexPath) as! AdvertisingCell
-        cell.size = CGSizeMake(SCREEN_WIDTH, cell.cellHeight!)
+        
         cell.imgView.image = self.imgArr[indexPath.item];
         return cell;
     }
+}
+
+extension CollectionViewController: UICollectionViewDelegate{
+    /** 调整CollectionViewCell的Size */
+    func collectionView(collectionView: UICollectionView!, layout collectionViewLayout: UICollectionViewLayout!, sizeForItemAtIndexPath indexPath: NSIndexPath!) -> CGSize{
+        return CGSizeMake(SCREEN_WIDTH, collectionHeight.constant)
+    }
+    
+    // OC版 的函数：
+    //- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath;
 }
 
 //MARK: - <UIScrollViewDelegate>
