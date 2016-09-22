@@ -51,7 +51,7 @@ class CollectionViewController: UIViewController {
     }
     
     private func addTimer(){
-        timer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: "nextPage", userInfo: nil, repeats: true)
+        timer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: #selector(CollectionViewController.nextPage), userInfo: nil, repeats: true)
         // 主线程在处理其他时间的时候也处理自动滚动
         NSRunLoop.mainRunLoop() .addTimer(timer, forMode: NSRunLoopCommonModes)
     }
