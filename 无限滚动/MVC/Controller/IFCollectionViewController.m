@@ -16,21 +16,21 @@
 
 static NSString * const reuserID = @"imgItemReuseID";
 
-@implementation IFCollectionViewController//<UICollectionViewDataSource, UICollectionViewDelegate>
+@implementation IFCollectionViewController
 
-- (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout{
-    if (self = [super initWithCollectionViewLayout:layout]){
-        [self.collectionView registerClass:[IFCollectionViewCell class] forCellWithReuseIdentifier:reuserID];
-        self.collectionView.pagingEnabled = YES;
-        self.collectionView.showsHorizontalScrollIndicator = NO;
-        UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)layout;
-        flowLayout.itemSize = self.collectionView.if_size;
-        flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-        flowLayout.minimumLineSpacing = 0;
-        self.collectionView.backgroundColor = [UIColor whiteColor];
-    }
-    return self;
+- (void)viewDidLoad{
+    [super viewDidLoad];
+    [self setupCollectionView];
 }
+
+- (void)setupCollectionView{
+    [self.collectionView registerClass:[IFCollectionViewCell class] forCellWithReuseIdentifier:reuserID];
+    self.collectionView.pagingEnabled = YES;
+    self.collectionView.backgroundColor = [UIColor greenColor];
+    //    self.collectionView.showsHorizontalScrollIndicator = NO;
+}
+
+
 
 #pragma mark - <UICollectionViewDataSource>
 

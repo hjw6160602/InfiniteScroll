@@ -22,6 +22,9 @@ static CGFloat const AspectRatio = 1.183;
 - (IFCollectionViewController *)collectionViewController{
     if (!_collectionViewController) {
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
+        layout.itemSize = CGSizeMake(self.view.if_w, self.view.if_w/AspectRatio);
+        layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+        layout.minimumLineSpacing = 0;
         _collectionViewController = [[IFCollectionViewController alloc]initWithCollectionViewLayout:layout];
     }
     return _collectionViewController;
