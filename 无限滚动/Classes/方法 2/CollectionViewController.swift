@@ -8,10 +8,12 @@
 
 import UIKit
 
+private let MaxSections = 3
+private let timeInterval:NSTimeInterval = 2
+
 class CollectionViewController: UIViewController {
-    
-    let MaxSections = 3
-    var currentPage = 0
+    let MidSection = MaxSections / 2
+    var numberOfPages = 1
     var timer = NSTimer()
     
     let pageControl = UIPageControl()
@@ -19,6 +21,11 @@ class CollectionViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var collectionHeight: NSLayoutConstraint!
     
+    var currentPage = 0 {
+        didSet{
+            pageControl.currentPage = currentPage
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         initStatusBar()
@@ -56,34 +63,51 @@ class CollectionViewController: UIViewController {
         NSRunLoop.mainRunLoop() .addTimer(timer, forMode: NSRunLoopCommonModes)
     }
     
-    private func removeTimer(){
-        self.timer.invalidate()
-    }
-    
-    func nextPage(){
-        //只要定时器一开始，进入当前方法，就拿到当前滚动所在的indexPath,然后偷偷将item滚动到最中间的组
-        resetScrollIndexPath()
-        
-        var Offset = collectionView.contentOffset
-        Offset.x += SCREEN_WIDTH;
-        print(Offset.x)
-        
-        currentPage = (currentPage+1) % ImgCount
-        
-        collectionView.setContentOffset(Offset, animated: true)
-    }
-    
-    private func resetScrollIndexPath(){
+    @objc private func nextPage(){
         // 下面这个方法取出在屏幕上可见的collectionView的可见items数组
-        let currentIndexPath = collectionView.indexPathsForVisibleItems().last!
-        if currentIndexPath.row != currentPage{
-            print("日了狗！")
+        let lastVisibleIndexPath = collectionView!.indexPathsForVisibleItems().last
+        // 拿到当前滚动所在的indexPath
+        if let lastVisibleIndexPath = lastVisibleIndexPath {
+            
+            // 将item滚动到下一页
+            var next = nextIndexPath(lastVisibleIndexPath)
+            
+            // 发现下一页的section和最中间section不等 并且下一页不是第一页
+            if next.section != MidSection && next.row != 0{//那么就
+                let restetdIndexPath = NSIndexPath(item: currentPage, section: MidSection)
+                collectionView!.scrollToItem(at: restetdIndexPath, at: .left, animated: false)
+                next.section = MidSection
+                print("before:\(restetdIndexPath.section).\(restetdIndexPath.row)")
+            }
+            
+            collectionView!.scrollToItem(at: next, at: .left, animated: true)
+            print("after:\(next.section).\(next.row)")
+            // 滚动完毕，当前页面+1
+            currentPage = (currentPage + 1) % numberOfPages
+            //            print("last:\(lastVisibleIndexPath.row) current:\(currentPage)")
+            if lastVisibleIndexPath.row != (currentPage - 1){
+                guard (lastVisibleIndexPath.row % (numberOfPages-1)) == 0 else {
+                    print("日了狗!\nlast:\(lastVisibleIndexPath.row) current:\(currentPage)")
+                    fatalError()
+                }
+            }
         }
-//        print("currentIndexPath : section \(currentIndexPath.section),row \(currentIndexPath.row),")
-        let restetdIndexPath = NSIndexPath(forItem: currentPage, inSection: MaxSections/2)
-//        print("restetdIndexPath : section \(restetdIndexPath.section),row \(restetdIndexPath.row),")
-        collectionView.scrollToItemAtIndexPath(restetdIndexPath, atScrollPosition: UICollectionViewScrollPosition.Left, animated: false)
     }
+        
+    /// nextIndexPath
+    /// - Parameter indexPath: 传入一个IndexPath
+    /// - Returns: 返回下一个即将要滚动到的IndexPath
+    private func nextIndexPath(indexPath:NSIndexPath) -> NSIndexPath{
+        var next = indexPath
+        next.row += 1;
+        if indexPath.row == (numberOfPages - 1) {
+            next.row = 0;
+            next.section += 1
+        }
+        //        print("section:\(next.section) row:\(next.row)")
+        return next
+    }
+        
 
     //MARK: - 懒加载
     private lazy var imgArr:[UIImage] = {
@@ -128,24 +152,20 @@ extension CollectionViewController: UICollectionViewDelegate{
 extension CollectionViewController: UIScrollViewDelegate{
     /** 当用户即将拖拽的时候就会调用 */
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-        removeTimer()
+        self.timer.invalidate()
     }
     
     /** 当用户停止拖拽的时候就会调用 */
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        addTimer()
+//        addTimer()
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        // 算出当前的页数
-        let page = Int(scrollView.contentOffset.x / scrollView.width + 0.5) % imgArr.count
-        currentPage = page
-        pageControl.currentPage = currentPage
-    }
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-        print("currentPage:\(currentPage)")
-        resetScrollIndexPath()
+        // 算出当前page
+        currentPage = Int(Float(scrollView.contentOffset.x / scrollView.width) + 0.5) % numberOfPages
     }
+    
+    
 }
 
